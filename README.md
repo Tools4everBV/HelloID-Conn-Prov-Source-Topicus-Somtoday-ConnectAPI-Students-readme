@@ -7,7 +7,7 @@
 | :information_source: Contact |
 |:---------------------------|
 | Please contact your local Tools4ever sales representative for further information and details about the implementation of this connector  |
-<br />
+<br /> 
 <p align="center">
   <img src="https://www.tools4ever.nl/connector-logos/somtoday-logo.png">
 </p>
