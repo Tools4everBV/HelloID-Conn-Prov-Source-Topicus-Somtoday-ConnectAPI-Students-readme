@@ -21,7 +21,6 @@
     - [Connection settings](#connection-settings)
     - [Prerequisites](#prerequisites)
     - [Remarks](#remarks)
-  - [Setup the connector](#setup-the-connector)
   - [Getting help](#getting-help)
   - [HelloID docs](#helloid-docs)
 
@@ -38,13 +37,15 @@ This connector is built with active data and only example future data from a Tes
 
 The following settings are required to connect to the API.
 
-| Setting      | Description                        | Mandatory   |
-| ------------ | -----------                        | ----------- |
-| ClientID     | The ClientID to connect to the API | Yes         |
-| ClientSecret | The Password to connect to the API | Yes         |
-| BaseUrl      | The URL to the API                 | Yes         |
-| Instelling   | The Name of the organization       | Yes         |
-| schoolYear   | Specify the period to received students (HUIDIG and VOLGEND)     | No         | (Script variable)
+| Setting         | Description                               | Mandatory   |
+| ------------    | -----------                               | ----------- |
+| ClientID        | The ClientID to connect to the API        | Yes         |
+| ClientSecret    | The Password to connect to the API        | Yes         |
+| BaseUrl         | The URL to the API                        | Yes         |
+| Instelling      | The Name of the organization              | Yes         |
+| CollectCardInfo | Collect access card Information (switch)  | no          |
+| CollectSafeInfo | Collect Safe Info (switch)                | no          |
+| SchoolYear      | Specify the period to received students (VORIG,HUIDIG and/or VOLGEND)     | No         | (Script variable)
 
 
 
@@ -65,10 +66,23 @@ $responseStudents = [array](Invoke-TopicusStudentsRestMethod @splatRestParams -R
 Select-Object *, @{Name = 'vakkeuzesUuid'; Expression = { $_.vakkeuzes.uuid } }
 ```
 
+- [november 2024] The connector has been extended with the options to collect access card ("toegangspas") information, and Safe ("kluis") information. These are stored as custom properties on the person. You may need to manually add these custom properties to the custom properties list of the connector in HelloID before the Personmapping can be imported. If there are more than one access card or safe number associated with a student, the result is stored as a (;-separated) text string.
 
-## Setup the connector
+The custom text properties that need to be added when using the supplied personmapping are :
+- CardLocationName
+- CardNumber
+- CardReturned
+- CardValidFrom
+- CardValidUntil
+- SafeLocationName
+- SafeKeyNumber
+- SafeKeyReturned
+- SafeNumber
+- SafeValidFrom
+- SafeValidUntil
 
-> _How to setup the connector in HelloID._ Are special settings required. Like the _primary manager_ settings for a source connector.
+
+For more information how to add custom fields see https://docs.helloid.com/en/provisioning/persons/person-schema/add-a-custom-person-or-contract-field.html
 
 ## Getting help
 
