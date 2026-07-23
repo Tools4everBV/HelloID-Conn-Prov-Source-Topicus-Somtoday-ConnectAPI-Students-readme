@@ -81,8 +81,20 @@ The custom text properties that need to be added are:
 - SafeValidFrom
 - SafeValidUntil
 
-
 For more information how to add custom fields see https://docs.helloid.com/en/provisioning/persons/person-schema/add-a-custom-person-or-contract-field.html
+
+**Adding Address information**
+
+By default, a user in SOM has a property called `adres_geheim`. When this property is set to `true`, no address information is available for that specific user. When adding address information in your fieldmapping we recommend you use this example bellow:
+```Javascript
+function HouseNumber() {
+  if (source.adres_geheim === true || source.adres_geheim === "True") {
+  return null;
+  }
+  return source.adres.huisnummer_zonder_toevoeging;
+}
+HouseNumber();
+```
 
 ## Getting help
 
