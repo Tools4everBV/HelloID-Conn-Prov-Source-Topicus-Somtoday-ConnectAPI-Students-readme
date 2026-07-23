@@ -66,9 +66,9 @@ $responseStudents = [array](Invoke-TopicusStudentsRestMethod @splatRestParams -R
 Select-Object *, @{Name = 'vakkeuzesUuid'; Expression = { $_.vakkeuzes.uuid } }
 ```
 
-- [november 2024] The connector has been extended with the options to collect access card ("toegangspas") information, and Safe ("kluis") information. These are stored as custom properties on the person. You may need to manually add these custom properties to the custom properties list of the connector in HelloID before the Personmapping can be imported. If there are more than one access card or safe number associated with a student, the result is stored as a (;-separated) text string.
+- [november 2024] The connector has been extended with the options to collect access card ("toegangspas") information, and Safe ("kluis") information. This can be stored as custom properties on the person. If there are more than one access card or safe number associated with a student, the result is stored as a (;-separated) text string.
 
-The custom text properties that need to be added when using the supplied personmapping are :
+The custom text properties that need to be added are:
 - CardLocationName
 - CardNumber
 - CardReturned
@@ -87,8 +87,6 @@ For more information how to add custom fields see https://docs.helloid.com/en/pr
 ## Getting help
 
 > _For more information on how to configure a HelloID PowerShell connector, please refer to our [documentation](https://docs.helloid.com/hc/en-us/articles/360012557600-Configure-a-custom-PowerShell-source-system) pages_
-
-> _If you need help, feel free to ask questions on our [forum](https://forum.helloid.com)_
 
 ## HelloID docs
 
