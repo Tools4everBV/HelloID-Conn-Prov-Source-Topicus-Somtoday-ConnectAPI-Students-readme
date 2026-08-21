@@ -40,7 +40,6 @@ HelloID-Conn-Prov-Source-Topicus-Somtoday-Students is a source connector. Topicu
 
 **Version 2.0.0:** This is a major release with breaking changes. You can now configure which contract types are included through the connector configuration. Each contract type (placements, class groups, subject choices) can be individually enabled or disabled based on your requirements.
 
-During implementation, you must choose between those contract types or make a combination of multiple. This connector is built with active data and only example future data from a Test environment.
 
 ## Getting started
 
@@ -58,14 +57,18 @@ The following settings are required to connect to the API.
 | ~~Instelling~~ | ~~The name of the organization~~ | ~~Yes~~ | 1.0.0 only | Removed in v2.0.0 |
 | CollectCardInfo | Collect access card information (switch) | No | 1.0.0+ | |
 | CollectSafeInfo | Collect safe information (switch) | No | 1.0.0+ | |
+| CollectCareGiverInfo | Collect caregiver information (switch) | No | 1.0.0+ | |
+| CollectFreeFieldInfo | Collect "Veldwaardes" information (switch) | No | 1.0.0+ | |
 | IncludePlacements | Include placements (plaatsingen) as contracts | No | 2.0.0+ | Default: `true` |
-| IncludeClassGroups | Include class groups (lesgroepen) as contracts | No | 2.0.0+ | Default: `true` |
-| IncludeSubjectChoices | Include subject choices (vakkeuzes) as contracts | No | 2.0.0+ | Default: `true` |
+| IncludeClassGroups | Include class groups (lesgroepen) as contracts | No | 2.0.0+ | Default: `false` |
+| IncludeSubjectChoices | Include subject choices (vakkeuzes) as contracts | No | 2.0.0+ | Default: `false` |
+
 | IsDebug | Enable debug logging | No | 1.0.0+ | |
 
 ### Prerequisites
 
 - As implementer, you need your own set of credentials before you can implement this connector. Therefore you need to sign a contract with the supplier.
+- Enable the Connect API for HelloID in your Somtoday environment and select additional fields if needed.
 
 ### Remarks
 
@@ -74,21 +77,19 @@ The following settings are required to connect to the API.
 **Version 2.0.0:** The connector provides granular control over which contract types are included:
 
 - **IncludePlacements**: When enabled (default: `true`), placements (plaatsingen) are included as contracts
-- **IncludeClassGroups**: When enabled (default: `true`), class groups (lesgroepen) are included as contracts  
-- **IncludeSubjectChoices**: When enabled (default: `true`), subject choices (vakkeuzes) are included as contracts
+- **IncludeClassGroups**: When enabled (default: `false`), class groups (lesgroepen) are included as contracts  
+- **IncludeSubjectChoices**: When enabled (default: `false`), subject choices (vakkeuzes) are included as contracts
 
 Each contract receives a unique `ExternalId` based on its UUID and validity period (start/end dates) in the format: `uuid_startdatum_einddatum`. This ensures proper tracking and deduplication of contracts.
 
 **Important:** The connector automatically deduplicates contracts based on their ExternalId. If a student appears in multiple school years with the same contract, only one instance will be kept.
-
-**Person DisplayName format (v2.0.0):** The DisplayName now includes the student number: `"Roepnaam Achternaam (12345)"`. This may affect HelloID correlation if you are upgrading from v1.0.0.
 
 #### Field mapping examples
 
 The connector includes a comprehensive `mapping.json` with examples for common mapping scenarios. Below are some key mappings available:
 
 **Person Mappings:**
-- **Basic fields**: ExternalId, Name fields (FamilyName, FamilyNamePrefix, GivenName, Initials, NickName)
+- **Basic fields**: ExternalId, Name fields (FamilyName, FamilyNamePrefix, GivenName, Initials, NickName), Location
 - **Contact**: Email address (emailadres), phone numbers
 - **Custom fields**: UUID, LeerlingNummer, Source, ageGroup (Adult/NotAdult based on birth date)
 
